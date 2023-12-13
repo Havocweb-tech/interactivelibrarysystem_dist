@@ -10,7 +10,7 @@ public class Patron {
     private int id;
     private String name;
     private String phone;
-    private final List<Book> books = new ArrayList<>();
+    // private final List<Book> books = new ArrayList<>();
     
     public Patron(int id, String name, String phone) {
         this.id = id;
@@ -60,6 +60,12 @@ public class Patron {
     }
     public String getDetailShort() {
         return "Patron #" + id + " - " + name;
+    }
+    public String getMyPatron(int Id) {
+    	if (id == Id) {
+    		return "Patron #" + id + " - " + name;
+    	}
+    	return "Patron not found";
     }
 }
  

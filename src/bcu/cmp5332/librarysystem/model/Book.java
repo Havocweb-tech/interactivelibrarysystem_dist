@@ -54,7 +54,12 @@ public class Book {
     public String getDetailsShort() {
         return "Book #" + id + " - " + title;
     }
-
+    public String getMyBook(int Id) {
+    	if (id == Id) {
+    		return "Book #" + id + " - " + title;
+    	}
+    	return "Book not found";
+    }
     public String getDetailsLong() {
         // TODO: implementation here
         return null;

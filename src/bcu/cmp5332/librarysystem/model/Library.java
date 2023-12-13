@@ -32,7 +32,10 @@ public class Library {
 
     public Patron getPatronByID(int id) throws LibraryException {
         // TODO: implementation here
-        return null;
+    	if (!patrons.containsKey(id)) {
+            throw new LibraryException("There is no such Patron with that ID.");
+        }
+        return patrons.get(id);
     }
 
     public void addBook(Book book) {
@@ -44,6 +47,10 @@ public class Library {
 
     public void addPatron(Patron patron) {
         // TODO: implementation here
+    	if (patrons.containsKey(patron.getId())) {
+            throw new IllegalArgumentException("Duplicate book ID.");
+        }
+        patrons.put(patron.getId(), patron);
     }
 }
  
