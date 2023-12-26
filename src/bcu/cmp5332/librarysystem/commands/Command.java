@@ -22,6 +22,8 @@ public interface Command {
             + "\texit                            exits the program";
 
     
+    public static String FILE_ERROR_MESSAGE = "An Error Occured, File couldn't be written.";
+    
     public void execute(Library library, LocalDate currentDate) throws LibraryException;
     
 }

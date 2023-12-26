@@ -1,9 +1,11 @@
 package bcu.cmp5332.librarysystem.commands;
 
+import bcu.cmp5332.librarysystem.data.LibraryData;
 import bcu.cmp5332.librarysystem.main.LibraryException;
 import bcu.cmp5332.librarysystem.model.Patron;
 import bcu.cmp5332.librarysystem.model.Library;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class AddPatron implements Command {
@@ -25,8 +27,14 @@ public class AddPatron implements Command {
             maxId = library.getPatrons().get(lastIndex).getId();
     	}
         Patron patron = new Patron(++maxId, name, phone);
-        library.addPatron(patron);
-        System.out.println("Patron #" + patron.getId() + " added.");
+        try {
+	        library.addPatron(patron);
+	        LibraryData.store(library);
+	        System.out.println("Patron #" + patron.getId() + " added.");
+        } catch (IOException e) {
+        	library.deletePatron(patron.getId());
+        	throw new LibraryException(FILE_ERROR_MESSAGE);
+        }
     }
 }
  

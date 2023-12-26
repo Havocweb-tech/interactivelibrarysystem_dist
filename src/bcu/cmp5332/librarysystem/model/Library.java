@@ -32,7 +32,7 @@ public class Library {
 
     public Patron getPatronByID(int id) throws LibraryException {
         // TODO: implementation here
-    	if (!patrons.containsKey(id)) {
+    	if (!patrons.containsKey(id) || patrons.get(id).isDeleted()) {
             throw new LibraryException("There is no such Patron with that ID.");
         }
         return patrons.get(id);
@@ -44,13 +44,30 @@ public class Library {
         }
         books.put(book.getId(), book);
     }
-
+    
+    public boolean deleteBook(int id) {
+    	boolean deleted = false;
+    	if (books.containsKey(id)) {
+            books.remove(id);
+            deleted = true;
+        }
+    	return deleted;
+    }
+    
     public void addPatron(Patron patron) {
         // TODO: implementation here
     	if (patrons.containsKey(patron.getId())) {
             throw new IllegalArgumentException("Duplicate book ID.");
         }
         patrons.put(patron.getId(), patron);
+    }
+    public boolean deletePatron(int id) {
+    	boolean deleted = false;
+    	if (patrons.containsKey(id)) {
+            patrons.remove(id);
+            deleted = true;
+        }
+    	return deleted;
     }
 }
  

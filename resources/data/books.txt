@@ -4,3 +4,6 @@
 43::The War of The Worlds::H.G. Wells::1898::
 44::james bond 007::Wise-King::2023::
 45::True Blood::Ikuobase Wisdom::2000::
+46::Thor Love and Thunder::Marvel::2022::
+47::Avengers::Marvel::2012::
+48::sivaxa btc::king siva::2005::

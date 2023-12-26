@@ -9,6 +9,7 @@ public class Book {
     private String title;
     private String author;
     private String publicationYear;
+    private boolean deleted = false;
 
     private Loan loan;
 
@@ -57,12 +58,17 @@ public class Book {
     public String getMyBook(int Id) {
     	if (id == Id) {
     		return "Book #" + id + " - " + title;
+    	}else {
+    		return "Book not found";
     	}
-    	return "Book not found";
+    	
     }
     public String getDetailsLong() {
-        // TODO: implementation here
-        return null;
+    	String toReturn = "Book ID: "+ id + "\n";
+        toReturn += "Title: " + title + "\n";
+        toReturn += "Author: " + author + "\n";
+        toReturn += "Publication Year: " + publicationYear + "\n";
+        return toReturn;       
     }
     
     public boolean isOnLoan() {
@@ -70,17 +76,29 @@ public class Book {
     }
     
     public String getStatus() {
-        // TODO: implementation here
-        return null;
+        if (loan == null)
+        	return "Available";
+        else
+        	return "On Loan";
     }
 
     public LocalDate getDueDate() {
-        // TODO: implementation here
-        return null;
+    	if (this.isOnLoan() == true)
+    		return null;
+    	else {
+    		return this.loan.getDueDate();
+    	}
     }
     
     public void setDueDate(LocalDate dueDate) throws LibraryException {
-        // TODO: implementation here
+    	if (this.isOnLoan())
+    	{
+    		this.loan.setDueDate(dueDate);
+    	}
+    	else
+    	{
+    		throw new LibraryException("Unable to Set Due Date");
+    	}
     }
 
     public Loan getLoan() {
@@ -93,5 +111,26 @@ public class Book {
 
     public void returnToLibrary() {
         loan = null;
+    }
+    public void setDeleted(boolean deleted) {
+    	this.deleted = deleted;
+    }
+    
+    public boolean isDeleted() {
+    	return this.deleted;
+    }
+    
+    public Book clone() {
+    	Book copy = new Book(this.id, this.title, this.author, this.publicationYear);
+    	copy.setDeleted(this.deleted);
+    	return copy;
+    }
+    
+    public void copy(Book rhs) {
+    	this.id = rhs.getId();
+    	this.title = rhs.getTitle();
+    	this.author = rhs.getAuthor();
+    	this.publicationYear = rhs.getPublicationYear();
+    	this.deleted = rhs.isDeleted();
     }
 }

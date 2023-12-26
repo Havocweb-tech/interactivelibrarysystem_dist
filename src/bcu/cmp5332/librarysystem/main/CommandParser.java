@@ -1,12 +1,15 @@
 package bcu.cmp5332.librarysystem.main;
 
 import bcu.cmp5332.librarysystem.commands.LoadGUI;
+import bcu.cmp5332.librarysystem.commands.RenewBook;
+import bcu.cmp5332.librarysystem.commands.ReturnBook;
 import bcu.cmp5332.librarysystem.commands.showbook;
 import bcu.cmp5332.librarysystem.commands.showpatron;
 import bcu.cmp5332.librarysystem.commands.ListBooks;
 import bcu.cmp5332.librarysystem.commands.ListPatrons;
 import bcu.cmp5332.librarysystem.commands.AddBook;
 import bcu.cmp5332.librarysystem.commands.AddPatron;
+import bcu.cmp5332.librarysystem.commands.BorrowBook;
 import bcu.cmp5332.librarysystem.commands.Command;
 import bcu.cmp5332.librarysystem.commands.Help;
 import java.io.BufferedReader;
@@ -63,11 +66,12 @@ public class CommandParser {
                 int bookID = Integer.parseInt(parts[2]);
 
                 if (cmd.equals("borrow")) {
-                    
+                	return new BorrowBook(patronID, bookID);
+                	
                 } else if (cmd.equals("renew")) {
-                    
+                	return new RenewBook(patronID, bookID);
                 } else if (cmd.equals("return")) {
-                    
+                	return new ReturnBook(bookID, patronID);
                 }
             }
         } catch (NumberFormatException ex) {

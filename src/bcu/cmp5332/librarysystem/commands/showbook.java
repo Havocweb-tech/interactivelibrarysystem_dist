@@ -15,14 +15,17 @@ public class showbook implements Command {
     @Override
     public void execute(Library library, LocalDate currentDate) throws LibraryException {
         List<Book> books = library.getBooks();
+        boolean bookFound = false;
         for (Book book : books) {
         	if(book.getId() == Id) {
         		System.out.println(book.getMyBook(Id));
+        		bookFound = true;
+        		break;
         	}
-            
-            
         }
-        
+        if(!bookFound) {
+        	System.out.println("Book not Found");
+        }
     }
 }
  
