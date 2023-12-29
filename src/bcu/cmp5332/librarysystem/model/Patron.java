@@ -10,15 +10,17 @@ public class Patron {
     private int id;
     private String name;
     private String phone;
+    private String email;
     private final List<Book> books = new ArrayList<>();
     private boolean deleted = false;
     
     
     public static final int MAX_BORROW_LIMIT = 4;
-    public Patron(int id, String name, String phone) {
+    public Patron(int id, String name, String phone, String email) {
         this.id = id;
         this.name = name;
         this.phone = phone;
+        this.email = email;
     }
     
     // TODO: implement constructor here
@@ -37,6 +39,14 @@ public class Patron {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getEmail() {
+    	return email;
+    }
+    
+    public void setEmail(String email) {
+    	this.email = email;
     }
     
     public String getPhone() {
@@ -116,6 +126,7 @@ public class Patron {
     	String str = "ID: " + this.getId() + "\n";
 		str += "Name: " + this.getName() + "\n";
 		str += "Phone number: " + this.getPhone() + "\n";
+		str += "Email: " + this.getEmail() + "\n";
 		return str;
     }
     public String getMyPatron(int Id) {
@@ -133,7 +144,7 @@ public class Patron {
 	}
 	
 	 public Patron clone() {
-    	Patron copy = new Patron(this.id, this.name, this.phone);
+    	Patron copy = new Patron(this.id, this.name, this.phone, this.email);
     	copy.setDeleted(this.deleted);
     	
     	for (int i = 0; i < books.size(); i++)
@@ -145,6 +156,7 @@ public class Patron {
     	this.id = rhs.getId();
     	this.name = rhs.getName();
     	this.phone = rhs.getPhone();
+    	this.email = rhs.getEmail();
     	this.deleted = rhs.isDeleted();
     	this.books.clear();
     	

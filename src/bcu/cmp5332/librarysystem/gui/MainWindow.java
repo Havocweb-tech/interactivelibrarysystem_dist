@@ -1,9 +1,14 @@
 package bcu.cmp5332.librarysystem.gui;
 
+import bcu.cmp5332.librarysystem.data.LibraryData;
+import bcu.cmp5332.librarysystem.main.LibraryException;
 import bcu.cmp5332.librarysystem.model.Book;
 import bcu.cmp5332.librarysystem.model.Library;
+import bcu.cmp5332.librarysystem.model.Patron;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -27,6 +32,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem booksDel;	
     private JMenuItem booksIssue;
     private JMenuItem booksReturn;
+    private JMenuItem booksRenew;
 
     private JMenuItem memView;
     private JMenuItem memAdd;
@@ -77,11 +83,13 @@ public class MainWindow extends JFrame implements ActionListener {
         booksDel = new JMenuItem("Delete");
         booksIssue = new JMenuItem("Issue");
         booksReturn = new JMenuItem("Return");
+        booksRenew = new JMenuItem("Renew");
         booksMenu.add(booksView);
         booksMenu.add(booksAdd);
         booksMenu.add(booksDel);
         booksMenu.add(booksIssue);
         booksMenu.add(booksReturn);
+        booksMenu.add(booksRenew);
         for (int i = 0; i < booksMenu.getItemCount(); i++) {
             booksMenu.getItem(i).addActionListener(this);
         }
@@ -114,10 +122,10 @@ public class MainWindow extends JFrame implements ActionListener {
     }	
 
 /* Uncomment the following code to run the GUI version directly from the IDE */
-//    public static void main(String[] args) throws IOException, LibraryException {
-//        Library library = LibraryData.load();
-//        new MainWindow(library);			
-//    }
+    public static void main(String[] args) throws IOException, LibraryException {
+        Library library = LibraryData.load();
+        new MainWindow(library);			
+    }
 
 
 
@@ -133,22 +141,25 @@ public class MainWindow extends JFrame implements ActionListener {
             new AddBookWindow(this);
             
         } else if (ae.getSource() == booksDel) {
-            
+            new DeleteBookWindow(this);
             
         } else if (ae.getSource() == booksIssue) {
-            
+            new IssueBookWindow(this);
             
         } else if (ae.getSource() == booksReturn) {
+            new ReturnBookWindow(this);
             
-            
-        } else if (ae.getSource() == memView) {
-            
+        }else if(ae.getSource() == booksRenew) {
+        	new RenewBookWindow(this);
+        }
+        else if (ae.getSource() == memView) {
+            displayPatrons();
             
         } else if (ae.getSource() == memAdd) {
-            
+        	new AddPatronWindow(this);
             
         } else if (ae.getSource() == memDel) {
-            
+        	new DeletePatronWindow(this);
             
         }
     }
@@ -156,20 +167,66 @@ public class MainWindow extends JFrame implements ActionListener {
     public void displayBooks() {
         List<Book> booksList = library.getBooks();
         // headers for the table
-        String[] columns = new String[]{"Title", "Author", "Pub Date", "Status"};
+        String[] columns = new String[]{"ID", "Title", "Author", "Pub Date", "Status"};
 
         Object[][] data = new Object[booksList.size()][6];
         for (int i = 0; i < booksList.size(); i++) {
             Book book = booksList.get(i);
-            data[i][0] = book.getTitle();
-            data[i][1] = book.getAuthor();
-            data[i][2] = book.getPublicationYear();
-            data[i][3] = book.getStatus();
+            data[i][0] = book.getId();
+            data[i][1] = book.getTitle();
+            data[i][2] = book.getAuthor();
+            data[i][3] = book.getPublicationYear();
+            data[i][4] = book.getStatus();
         }
 
         JTable table = new JTable(data, columns);
         this.getContentPane().removeAll();
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
-    }	
+        MainWindow mw = this;
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                	int id = Integer.parseInt(String.valueOf(table.getModel().getValueAt(row, 0)));
+                	new ViewBookPatronWindow(id, mw);
+                }
+            }
+        });
+    }
+    public void displayPatrons() {
+        List<Patron> patronList = library.getPatrons();
+        // headers for the table
+        String[] columns = new String[]{"Id", "Name", "Email", "Phone", "Books Borrowed"};
+
+        Object[][] data = new Object[patronList.size()][5];
+        for (int i = 0; i < patronList.size(); i++) {
+            Patron patron = patronList.get(i);
+            data[i][0] = patron.getId();
+            data[i][1] = patron.getName();
+            data[i][2] = patron.getEmail();
+            data[i][3] = patron.getPhone();
+            data[i][4] = String.valueOf(patron.getBooks().size());
+        }
+
+        JTable table = new JTable(data, columns);
+        this.getContentPane().removeAll();
+        this.getContentPane().add(new JScrollPane(table));
+        this.revalidate();
+        MainWindow mw = this;
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                	int id = Integer.parseInt(String.valueOf(table.getModel().getValueAt(row, 0)));
+                	new ViewPatronBooksWindow(id, mw);
+                }
+            }
+        });
+    }
 }
+

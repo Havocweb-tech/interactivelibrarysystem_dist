@@ -41,8 +41,10 @@ public class CommandParser {
                 String name = br.readLine();
                 System.out.print("Phone: ");
                 String phone = br.readLine();
+                System.out.print("Email: ");
+                String email = br.readLine();
                 
-                return new AddPatron(name, phone);
+                return new AddPatron(name, phone, email);
             } else if (cmd.equals("loadgui")) {
                 return new LoadGUI();
             } else if (parts.length == 1) {

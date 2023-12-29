@@ -2,8 +2,5 @@
 23::Nineteen Eighty-Four::George Orwell::1949::
 42::The Hitchhiker's Guide to the Galaxy::Douglas Adams::1979::
 43::The War of The Worlds::H.G. Wells::1898::
-44::james bond 007::Wise-King::2023::
-45::True Blood::Ikuobase Wisdom::2000::
-46::Thor Love and Thunder::Marvel::2022::
-47::Avengers::Marvel::2012::
-48::sivaxa btc::king siva::2005::
+44::the legend of SAPA::Bola Ahmed Tinubu::2023::
+46::Nigeria no go stand again::Chinua Achibe::1999::
