@@ -1,14 +1,17 @@
+
 package bcu.cmp5332.librarysystem.model;
 
 import java.time.LocalDate;
 
 public class Loan {
     
+    // INSTANCE VARIABLES
     private Patron patron;
     private Book book;
     private LocalDate startDate;
     private LocalDate dueDate;
 
+    // CONSTRUCTOR
     public Loan(Patron patron, Book book, LocalDate startDate, LocalDate dueDate) {
         this.patron = patron;
         this.book = book;
@@ -16,7 +19,7 @@ public class Loan {
         this.dueDate = dueDate;
     }
     
-    // TODO: implementation of Getter and Setter methods
+    // GETTER AND SETTER METHODS
     public Patron getPatron() {
     	return patron;
     }
@@ -49,4 +52,3 @@ public class Loan {
     	this.dueDate = dueDate;
     }
 }
- 

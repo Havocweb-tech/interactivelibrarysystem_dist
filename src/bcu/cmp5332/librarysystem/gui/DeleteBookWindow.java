@@ -1,3 +1,4 @@
+
 package bcu.cmp5332.librarysystem.gui;
 
 import bcu.cmp5332.librarysystem.commands.DeleteBook;
@@ -7,32 +8,38 @@ import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
-public class DeleteBookWindow  {
+public class DeleteBookWindow {
 
+    // INSTANCE VARIABLES
     private MainWindow mw;
-    int id;
-    
+    private int id;
+
+    // CONSTRUCTOR
     public DeleteBookWindow(MainWindow mw) {
-    	this.mw = mw;
-    	initialize();
+        this.mw = mw;
+        initialize();
     }
-    
+
+    // METHOD TO INITIALIZE THE DELETE BOOK WINDOW
     private void initialize() {
-    	String res= JOptionPane.showInputDialog("Book Id:");
-    	id = Integer.parseInt(res);
-    	performAction();
+        // PROMPT USER FOR BOOK ID
+        String res = JOptionPane.showInputDialog("Book Id:");
+        id = Integer.parseInt(res);
+        // PERFORM ACTION TO DELETE BOOK
+        performAction();
     }
-    
+
+    // METHOD TO PERFORM THE DELETE BOOK ACTION
     private void performAction() {
         try {
-        	Command deleteBook = new DeleteBook(id);
-			deleteBook.execute(mw.getLibrary(), LocalDate.now());
-			mw.displayBooks();
-		} catch (LibraryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // CREATE DELETE BOOK COMMAND AND EXECUTE
+            Command deleteBook = new DeleteBook(id);
+            deleteBook.execute(mw.getLibrary(), LocalDate.now());
+            // DISPLAY UPDATED BOOK LIST
+            mw.displayBooks();
+        } catch (LibraryException e) {
+            // HANDLE LIBRARY EXCEPTION
+            e.printStackTrace();
+        }
     }
-
-
 }

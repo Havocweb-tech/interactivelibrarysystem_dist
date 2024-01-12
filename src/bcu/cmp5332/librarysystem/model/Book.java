@@ -9,17 +9,22 @@ public class Book {
     private String title;
     private String author;
     private String publicationYear;
+    private String Publisher;
     private boolean deleted = false;
 
     private Loan loan;
-
-    public Book(int id, String title, String author, String publicationYear) {
+    
+    // CONSTRUCTOR
+    public Book(int id, String title, String author, String publicationYear, String Publisher) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
+        this.Publisher = Publisher;
     }
 
+    
+    // GETTERS AND SETTERS METHODS
     public int getId() {
         return id;
     } 
@@ -47,6 +52,14 @@ public class Book {
     public String getPublicationYear() {
         return publicationYear;
     }
+    
+    public String getPublisher() {
+    	return Publisher;
+    }
+    
+    public void setPublisher(String Publisher) {
+    	this.Publisher = Publisher;
+    }
 
     public void setPublicationYear(String publicationYear) {
         this.publicationYear = publicationYear;
@@ -68,6 +81,7 @@ public class Book {
         toReturn += "Title: " + title + "\n";
         toReturn += "Author: " + author + "\n";
         toReturn += "Publication Year: " + publicationYear + "\n";
+        toReturn += "Publisher: "+ Publisher + "\n";
         return toReturn;       
     }
     
@@ -113,6 +127,7 @@ public class Book {
         loan = null;
     }
     public void setDeleted(boolean deleted) {
+    	// SETTING BOOK TO DELETED
     	this.deleted = deleted;
     }
     
@@ -121,8 +136,11 @@ public class Book {
     }
     
     public Book clone() {
-    	Book copy = new Book(this.id, this.title, this.author, this.publicationYear);
+    	// CREATE A NEW BOOK
+    	Book copy = new Book(this.id, this.title, this.author, this.publicationYear, this.Publisher);
+    	// SETTING THE BOOK COPY TO NOT DELETED
     	copy.setDeleted(this.deleted);
+    	// RETURN COPY....
     	return copy;
     }
     
@@ -131,6 +149,7 @@ public class Book {
     	this.title = rhs.getTitle();
     	this.author = rhs.getAuthor();
     	this.publicationYear = rhs.getPublicationYear();
+    	this.Publisher = rhs.getPublisher();
     	this.deleted = rhs.isDeleted();
     }
 }

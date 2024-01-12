@@ -1,3 +1,4 @@
+
 package bcu.cmp5332.librarysystem.gui;
 
 import bcu.cmp5332.librarysystem.commands.DeletePatron;
@@ -7,32 +8,38 @@ import java.time.LocalDate;
 
 import javax.swing.JOptionPane;
 
-public class DeletePatronWindow  {
+public class DeletePatronWindow {
 
+    // INSTANCE VARIABLES
     private MainWindow mw;
-    int id;
-    
+    private int id;
+
+    // CONSTRUCTOR
     public DeletePatronWindow(MainWindow mw) {
-    	this.mw = mw;
-    	initialize();
+        this.mw = mw;
+        initialize();
     }
-    
+
+    // METHOD TO INITIALIZE THE DELETE PATRON WINDOW
     private void initialize() {
-    	String res= JOptionPane.showInputDialog("Patron Id:");
-    	id = Integer.parseInt(res);
-    	performAction();
+        // PROMPT USER FOR PATRON ID
+        String res = JOptionPane.showInputDialog("Patron Id:");
+        id = Integer.parseInt(res);
+        // PERFORM ACTION TO DELETE PATRON
+        performAction();
     }
-    
+
+    // METHOD TO PERFORM THE DELETE PATRON ACTION
     private void performAction() {
         try {
-        	Command deleteBook = new DeletePatron(id);
-			deleteBook.execute(mw.getLibrary(), LocalDate.now());
-			mw.displayPatrons();
-		} catch (LibraryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // CREATE DELETE PATRON COMMAND AND EXECUTE
+            Command deletePatron = new DeletePatron(id);
+            deletePatron.execute(mw.getLibrary(), LocalDate.now());
+            // DISPLAY UPDATED PATRON LIST
+            mw.displayPatrons();
+        } catch (LibraryException e) {
+            // HANDLE LIBRARY EXCEPTION
+            e.printStackTrace();
+        }
     }
-
-
 }

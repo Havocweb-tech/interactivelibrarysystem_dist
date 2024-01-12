@@ -9,13 +9,20 @@ import java.util.List;
 
 public class ListPatrons implements Command {
 
+    // EXECUTE METHOD OVERRIDING COMMAND INTERFACE
     @Override
     public void execute(Library library, LocalDate currentDate) throws LibraryException {
+        // GET LIST OF PATRONS FROM LIBRARY
         List<Patron> patrons = library.getPatrons();
+        
+        // PRINT DETAILS OF EACH PATRON
         for (Patron patron : patrons) {
             System.out.println(patron.getDetailShort());
         }
+        
+        // PRINT TOTAL NUMBER OF PATRONS
         System.out.println(patrons.size() + " Patron(s)");
     }
 }
+
  

@@ -1,3 +1,4 @@
+
 package bcu.cmp5332.librarysystem.commands;
 
 import java.awt.BorderLayout;
@@ -15,20 +16,33 @@ import bcu.cmp5332.librarysystem.main.LibraryException;
 import bcu.cmp5332.librarysystem.model.Book;
 import bcu.cmp5332.librarysystem.model.Library;
 
-public class ViewPatronBooksGUI implements  Command {
+public class ViewPatronBooksGUI implements Command {
 
+    // INSTANCE VARIABLES
     private final int patronId;
-    public ViewPatronBooksGUI(int bookId) {
-        this.patronId = bookId;
+
+    // CONSTRUCTOR
+    public ViewPatronBooksGUI(int patronId) {
+        this.patronId = patronId;
     }
-    
+
+    // OVERRIDE execute METHOD
     @Override
     public void execute(Library library, LocalDate currentDate) throws LibraryException {
-    	
-		JFrame tmpFrame = new JFrame();
-		String[] columns = new String[]{"Id", "Title", "Issue Date", "Due Date"};
+
+        // CREATE A NEW JFRAME
+        JFrame tmpFrame = new JFrame();
+
+        // DEFINE COLUMNS FOR THE JTABLE
+        String[] columns = new String[]{"Id", "Title", "Issue Date", "Due Date"};
+
+        // GET THE LIST OF BOOKS BORROWED BY THE PATRON
         List<Book> booksList = library.getPatronByID(patronId).getBooks();
-        Object[][] data = new Object[booksList.size()][7];
+
+        // CREATE A 2D ARRAY FOR JTABLE DATA
+        Object[][] data = new Object[booksList.size()][4];
+
+        // POPULATE THE DATA ARRAY
         for (int i = 0; i < booksList.size(); i++) {
             Book book = booksList.get(i);
             data[i][0] = book.getId();
@@ -37,12 +51,16 @@ public class ViewPatronBooksGUI implements  Command {
             data[i][3] = book.getLoan().getDueDate().toString();
         }
 
+        // CREATE A JTABLE WITH THE PROVIDED DATA AND COLUMNS
         JTable table = new JTable(data, columns);
+
+        // REMOVE ALL COMPONENTS FROM THE FRAME, ADD THE JTABLE INSIDE A SCROLLPANE, AND REVALIDATE
         tmpFrame.getContentPane().removeAll();
         tmpFrame.getContentPane().add(new JScrollPane(table));
         tmpFrame.revalidate();
+
+        // PACK AND MAKE THE FRAME VISIBLE
         tmpFrame.pack();
-		tmpFrame.setVisible(true);
+        tmpFrame.setVisible(true);
     }
-    
 }

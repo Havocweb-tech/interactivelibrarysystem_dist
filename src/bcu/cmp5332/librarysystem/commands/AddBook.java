@@ -13,11 +13,13 @@ public class AddBook implements  Command {
     private final String title;
     private final String author;
     private final String publicationYear;
+    private final String Publisher;
 
-    public AddBook(String title, String author, String publicationYear) {
+    public AddBook(String title, String author, String publicationYear, String Publisher) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
+        this.Publisher = Publisher;
     }
     
     @Override
@@ -27,7 +29,8 @@ public class AddBook implements  Command {
     		int lastIndex = library.getBooks().size() - 1;
             maxId = library.getBooks().get(lastIndex).getId();
     	}
-        Book book = new Book(++maxId, title, author, publicationYear);
+    	// ADD BOOK INTO THE BOOK MODEL....
+        Book book = new Book(++maxId, title, author, publicationYear, Publisher);
         try {
 		    library.addBook(book);
 		    LibraryData.store(library);

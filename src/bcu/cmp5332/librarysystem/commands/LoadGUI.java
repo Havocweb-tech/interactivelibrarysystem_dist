@@ -7,10 +7,11 @@ import java.time.LocalDate;
 
 public class LoadGUI implements Command {
 
+    // EXECUTE METHOD OVERRIDING COMMAND INTERFACE
     @Override
     public void execute(Library library, LocalDate currentDate) throws LibraryException {
+        // CREATE AND DISPLAY MAIN WINDOW GUI WITH LIBRARY
         new MainWindow(library);
     }
     
 }
- 

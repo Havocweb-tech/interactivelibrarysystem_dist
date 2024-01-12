@@ -1,3 +1,4 @@
+
 package bcu.cmp5332.librarysystem.gui;
 
 import bcu.cmp5332.librarysystem.commands.Command;
@@ -11,22 +12,25 @@ import javax.swing.JOptionPane;
 
 public class ViewPatronBooksWindow extends JFrame {
 
+    // INSTANCE VARIABLES
     private MainWindow mw;
     private int patronId;
 
-    public ViewPatronBooksWindow(int bookId, MainWindow mw) {
-    	this.mw = mw;
-        this.patronId = bookId;
-        getBookPatronInfo();
+    // CONSTRUCTOR
+    public ViewPatronBooksWindow(int patronId, MainWindow mw) {
+        this.mw = mw;
+        this.patronId = patronId;
+        getPatronBooksInfo();
     }
 
-    private void getBookPatronInfo() {
+    // METHOD TO GET PATRON BOOKS INFORMATION
+    private void getPatronBooksInfo() {
         try {
-           
+            // CREATE AND EXECUTE THE VIEWPATRONBOOKSGUI COMMAND
             Command viewPatronBooks = new ViewPatronBooksGUI(patronId);
             viewPatronBooks.execute(mw.getLibrary(), LocalDate.now());
-           
         } catch (LibraryException ex) {
+            // HANDLE LIBRARY EXCEPTION
             JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

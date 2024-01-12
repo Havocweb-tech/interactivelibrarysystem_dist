@@ -1,3 +1,4 @@
+
 package bcu.cmp5332.librarysystem.gui;
 
 import bcu.cmp5332.librarysystem.commands.AddBook;
@@ -20,6 +21,7 @@ import javax.swing.UIManager;
 
 public class IssueBookWindow extends JFrame implements ActionListener {
 
+    // INSTANCE VARIABLES
     private MainWindow mw;
     private JTextField bookIdField = new JTextField();
     private JTextField patronIdField = new JTextField();
@@ -28,14 +30,13 @@ public class IssueBookWindow extends JFrame implements ActionListener {
     private JButton issueBtn = new JButton("Issue");
     private JButton cancelBtn = new JButton("Cancel");
 
+    // CONSTRUCTOR
     public IssueBookWindow(MainWindow mw) {
         this.mw = mw;
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
+    // METHOD TO INITIALIZE THE ISSUE BOOK WINDOW
     private void initialize() {
 
         try {
@@ -73,6 +74,7 @@ public class IssueBookWindow extends JFrame implements ActionListener {
 
     }
 
+    // OVERRIDE actionPerformed METHOD
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == issueBtn) {
@@ -83,17 +85,22 @@ public class IssueBookWindow extends JFrame implements ActionListener {
 
     }
 
+    // METHOD TO HANDLE ISSUE BOOK ACTION
     private void issueBook() {
         try {
+            // PARSE USER INPUT
             int bookId = Integer.parseInt(bookIdField.getText());
             int patronId = Integer.parseInt(patronIdField.getText());
             LocalDate dueDate = LocalDate.parse(dueDateField.getText());
-            // create and execute the IssueBook Command
+            
+            // CREATE AND EXECUTE THE ISSUEBOOK COMMAND
             Command issueBook = new IssueBook(bookId, patronId, dueDate);
             issueBook.execute(mw.getLibrary(), LocalDate.now());
-            // refresh the view with the list of books
+            
+            // REFRESH THE VIEW WITH THE LIST OF BOOKS
             mw.displayBooks();
-            // hide (close) the IssueBookWindow
+            
+            // HIDE (CLOSE) THE ISSUEBOOKWINDOW
             this.setVisible(false);
         } catch (LibraryException ex) {
             JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);

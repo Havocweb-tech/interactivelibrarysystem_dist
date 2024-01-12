@@ -5,36 +5,43 @@ import java.util.*;
 
 public class Library {
     
-    private final int loanPeriod = 7;
-    private final Map<Integer, Patron> patrons = new TreeMap<>();
-    private final Map<Integer, Book> books = new TreeMap<>();
+	// INSTANCE VARIABLES
+	private final int loanPeriod = 7;
+	private final Map<Integer, Patron> patrons = new TreeMap<>();
+	private final Map<Integer, Book> books = new TreeMap<>();
 
-    public int getLoanPeriod() {
-        return loanPeriod;
-    }
+	// GETTER METHODS
+	public int getLoanPeriod() {
+	    return loanPeriod;
+	}
 
-    public List<Book> getBooks() {
-        List<Book> out = new ArrayList<>(books.values());
-        return Collections.unmodifiableList(out);
-    }
-    
-    public List<Patron> getPatrons() {
-        List<Patron> out = new ArrayList<>(patrons.values());
-        return Collections.unmodifiableList(out);
-    }
+	public List<Book> getBooks() {
+	    List<Book> out = new ArrayList<>(books.values());
+	    return Collections.unmodifiableList(out);
+	}
 
-    public Book getBookByID(int id) throws LibraryException {
-        if (!books.containsKey(id)) {
-            throw new LibraryException("There is no such book with that ID.");
-        }
-        return books.get(id);
-    }
+	public List<Patron> getPatrons() {
+	    List<Patron> out = new ArrayList<>(patrons.values());
+	    return Collections.unmodifiableList(out);
+	}
+
+	// METHOD TO GET BOOK BY ID
+	public Book getBookByID(int id) throws LibraryException {
+	    if (!books.containsKey(id)) {
+	        throw new LibraryException("There is no such book with that ID.");
+	    }
+	    return books.get(id);
+	}
+
 
     public Patron getPatronByID(int id) throws LibraryException {
         // TODO: implementation here
+    	// CHECK IF THE ID IS AVAILABLE OR IF THE PATRONID DELETED...
     	if (!patrons.containsKey(id) || patrons.get(id).isDeleted()) {
+    		// THROW LIBRARY EXCEPTION...
             throw new LibraryException("There is no such Patron with that ID.");
         }
+    	//RETURN PATRON ID
         return patrons.get(id);
     }
 
@@ -46,11 +53,14 @@ public class Library {
     }
     
     public boolean deleteBook(int id) {
+    	// CREATE A BOOLEAN TO SPECIFY IF DELETE IS SUCCESSFUL...
     	boolean deleted = false;
     	if (books.containsKey(id)) {
             books.remove(id);
+            // ASSIGNING THE BOOLEAN TO TRUE
             deleted = true;
         }
+    	// RETURN DELETED
     	return deleted;
     }
     

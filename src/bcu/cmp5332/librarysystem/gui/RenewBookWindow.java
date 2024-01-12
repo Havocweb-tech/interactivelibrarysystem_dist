@@ -1,3 +1,4 @@
+
 package bcu.cmp5332.librarysystem.gui;
 
 import bcu.cmp5332.librarysystem.commands.AddBook;
@@ -22,6 +23,7 @@ import javax.swing.UIManager;
 
 public class RenewBookWindow extends JFrame implements ActionListener {
 
+    // INSTANCE VARIABLES
     private MainWindow mw;
     private JTextField patronIdField = new JTextField();
     private JTextField bookIdField = new JTextField();
@@ -29,14 +31,13 @@ public class RenewBookWindow extends JFrame implements ActionListener {
     private JButton renewBtn = new JButton("Renew");
     private JButton cancelBtn = new JButton("Cancel");
 
+    // CONSTRUCTOR
     public RenewBookWindow(MainWindow mw) {
         this.mw = mw;
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
+    // METHOD TO INITIALIZE THE RENEW BOOK WINDOW
     private void initialize() {
 
         try {
@@ -72,6 +73,7 @@ public class RenewBookWindow extends JFrame implements ActionListener {
 
     }
 
+    // OVERRIDE actionPerformed METHOD
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == renewBtn) {
@@ -82,16 +84,21 @@ public class RenewBookWindow extends JFrame implements ActionListener {
 
     }
 
+    // METHOD TO HANDLE RENEW BOOK ACTION
     private void renewBook() {
         try {
+            // PARSE USER INPUT
             int bookId = Integer.parseInt(bookIdField.getText());
             int patronId = Integer.parseInt(patronIdField.getText());
-            // create and execute the Renew Command
+            
+            // CREATE AND EXECUTE THE RENEWBOOK COMMAND
             Command renewBook = new RenewBook(patronId, bookId);
             renewBook.execute(mw.getLibrary(), LocalDate.now());
-            // refresh the view with the list of books
+            
+            // REFRESH THE VIEW WITH THE LIST OF BOOKS
             mw.displayBooks();
-            // hide (close) the RenewBookCommand
+            
+            // HIDE (CLOSE) THE RENEWBOOKCOMMAND
             this.setVisible(false);
         } catch (LibraryException ex) {
             JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);

@@ -1,3 +1,4 @@
+
 package bcu.cmp5332.librarysystem.gui;
 
 import bcu.cmp5332.librarysystem.commands.AddBook;
@@ -19,8 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+
 public class ReturnBookWindow extends JFrame implements ActionListener {
 
+    // INSTANCE VARIABLES
     private MainWindow mw;
     private JTextField patronIdField = new JTextField();
     private JTextField bookIdField = new JTextField();
@@ -28,14 +31,13 @@ public class ReturnBookWindow extends JFrame implements ActionListener {
     private JButton returnBtn = new JButton("Return");
     private JButton cancelBtn = new JButton("Cancel");
 
+    // CONSTRUCTOR
     public ReturnBookWindow(MainWindow mw) {
         this.mw = mw;
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
+    // METHOD TO INITIALIZE THE RETURN BOOK WINDOW
     private void initialize() {
 
         try {
@@ -71,26 +73,32 @@ public class ReturnBookWindow extends JFrame implements ActionListener {
 
     }
 
+    // OVERRIDE actionPerformed METHOD
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == returnBtn) {
-            issueBook();
+            returnBook();
         } else if (ae.getSource() == cancelBtn) {
             this.setVisible(false);
         }
 
     }
 
-    private void issueBook() {
+    // METHOD TO HANDLE RETURN BOOK ACTION
+    private void returnBook() {
         try {
+            // PARSE USER INPUT
             int bookId = Integer.parseInt(bookIdField.getText());
             int patronId = Integer.parseInt(patronIdField.getText());
-            // create and execute the ReturnBook Command
+            
+            // CREATE AND EXECUTE THE RETURNBOOK COMMAND
             Command returnBook = new ReturnBook(bookId, patronId);
             returnBook.execute(mw.getLibrary(), LocalDate.now());
-            // refresh the view with the list of books
+            
+            // REFRESH THE VIEW WITH THE LIST OF BOOKS
             mw.displayBooks();
-            // hide (close) the ReturnBookWindow
+            
+            // HIDE (CLOSE) THE RETURNBOOKWINDOW
             this.setVisible(false);
         } catch (LibraryException ex) {
             JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);

@@ -167,7 +167,7 @@ public class MainWindow extends JFrame implements ActionListener {
     public void displayBooks() {
         List<Book> booksList = library.getBooks();
         // headers for the table
-        String[] columns = new String[]{"ID", "Title", "Author", "Pub Date", "Status"};
+        String[] columns = new String[]{"ID", "Title", "Author", "Pub Date", "Status", "Publisher"};
 
         Object[][] data = new Object[booksList.size()][6];
         for (int i = 0; i < booksList.size(); i++) {
@@ -177,6 +177,7 @@ public class MainWindow extends JFrame implements ActionListener {
             data[i][2] = book.getAuthor();
             data[i][3] = book.getPublicationYear();
             data[i][4] = book.getStatus();
+            data[i][5] = book.getPublisher();
         }
 
         JTable table = new JTable(data, columns);

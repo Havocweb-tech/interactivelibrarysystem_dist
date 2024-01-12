@@ -8,24 +8,39 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class showbook implements Command {
-	private int Id;
-	public showbook(int id) {
-		this.Id = id;
-	}
+
+    // PRIVATE FIELD
+    private int Id;
+
+    // CONSTRUCTOR
+    public showbook(int id) {
+        this.Id = id;
+    }
+
+    // EXECUTE METHOD OVERRIDING COMMAND INTERFACE
     @Override
     public void execute(Library library, LocalDate currentDate) throws LibraryException {
+        // GET LIST OF BOOKS FROM LIBRARY
         List<Book> books = library.getBooks();
+
+        // FLAG TO INDICATE IF BOOK IS FOUND
         boolean bookFound = false;
+
+        // LOOP THROUGH BOOKS TO FIND THE SPECIFIED BOOK
         for (Book book : books) {
-        	if(book.getId() == Id) {
-        		System.out.println(book.getMyBook(Id));
-        		bookFound = true;
-        		break;
-        	}
+            if (book.getId() == Id) {
+                // PRINT BOOK DETAILS AND SET FLAG TO TRUE
+                System.out.println(book.getMyBook(Id));
+                bookFound = true;
+                break;
+            }
         }
-        if(!bookFound) {
-        	System.out.println("Book not Found");
+
+        // IF BOOK NOT FOUND, PRINT MESSAGE
+        if (!bookFound) {
+            System.out.println("Book not Found");
         }
     }
 }
+
  
